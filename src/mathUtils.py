@@ -14,7 +14,7 @@ def classify_and_process(items, mode, threshold, verbose):
             if item > threshold:
                 if verbose:
                     if item > threshold * 2:
-                        results.append("very high")
+                        results.append("very very high")
                     else:
                         results.append("high")
                 else:
