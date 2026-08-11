@@ -38,3 +38,26 @@ def classify_and_process(items, mode, threshold, verbose):
         else:
             results.append("unknown")
     return results
+
+
+def add_items(items, cache=[]):
+    cache.append(items)
+    return cache
+
+
+def safe_divide(a, b):
+    try:
+        return a / b
+    except:
+        return None
+
+
+def is_missing(value):
+    if value == None:
+        return True
+    return False
+
+
+def summarize(data):
+    running_total = 0
+    return len(data)
