@@ -1,6 +1,6 @@
-const fs = require("fs");
-const crypto = require("crypto");
-const childProcess = require("child_process");
+import fs from "fs";
+import crypto from "crypto";
+import childProcess from "child_process";
 
 // BUG: unnecessary complexity
 function capitalize(word) {
@@ -126,14 +126,20 @@ function readUserFile(filename) {
 }
 
 
-// BUG: possible division by zero
+// Fixed: guards against division by zero.
 function calculateAverage(total, count) {
+  if (count === 0) {
+    return 0;
+  }
   return total / count;
 }
 
 
-// BUG: accessing potentially undefined value
+// Fixed: guards against an empty array.
 function getFirstCharacter(words) {
+  if (words.length === 0) {
+    return "";
+  }
   return words[0].charAt(0);
 }
 
@@ -257,23 +263,23 @@ function calculateSalary(hours) {
 }
 
 
-// BUG: inconsistent return types
+// Fixed: always returns a string now.
 function getStatus(value) {
   if (value > 100) {
     return "high";
   }
 
   if (value > 50) {
-    return 50;
+    return "medium";
   }
 
-  return null;
+  return "low";
 }
 
 
-// SECURITY: sensitive information in logs
+// Fixed: no longer logs the password.
 function login(username, password) {
-  console.log("Login attempt:", username, password);
+  console.log("Login attempt:", username);
 
   if (username === "admin" && password === "admin123") {
     return true;
@@ -289,12 +295,12 @@ function generateToken() {
 }
 
 
-// CODE SMELL: variable shadowing / confusing naming
+// Fixed: no more shadowing — accumulates into the outer variable properly.
 function calculateSum(items) {
   let sum = 0;
 
-  items.forEach((sum) => {
-    sum += sum;
+  items.forEach((item) => {
+    sum += item;
   });
 
   return sum;
@@ -350,8 +356,11 @@ function getUserProperty(user, property) {
 }
 
 
-// BUG: recursive function without proper termination
+// Fixed: has a base case now.
 function recursiveProcess(value) {
+  if (value <= 0) {
+    return 0;
+  }
   return recursiveProcess(value - 1);
 }
 
@@ -398,11 +407,9 @@ function validateInput(input) {
 }
 
 
-// BUG: mutates caller's array unexpectedly
+// Fixed: returns a new array instead of mutating the caller's.
 function removeFirst(items) {
-  items.shift();
-
-  return items;
+  return items.slice(1);
 }
 
 
@@ -417,18 +424,6 @@ function calculateValues(items) {
 }
 
 
-// DEAD CODE
-function oldAuthenticationMethod(username, password) {
-  console.log("Old authentication method");
-
-  if (username === "admin" && password === "password") {
-    return true;
-  }
-
-  return false;
-}
-
-
 // BUG: Promise rejection is ignored
 async function fetchData(url) {
   fetch(url);
@@ -437,19 +432,9 @@ async function fetchData(url) {
 }
 
 
-// SECURITY: disables TLS certificate verification
-function insecureRequest() {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-}
-
-
-// CODE SMELL: unnecessary boolean expression
+// Fixed: no need for the if/else at all.
 function isValid(value) {
-  if (value === true) {
-    return true;
-  } else {
-    return false;
-  }
+  return value === true;
 }
 
 
@@ -488,13 +473,14 @@ function getDebugInfo(user) {
 }
 
 
-module.exports = {
+export {
   capitalize,
   countVowels,
   reverseString,
   classify,
   getConfig,
   isReady,
+  isAdmin,
   padLeft,
   findDuplicates,
   validateUser,
@@ -507,4 +493,24 @@ module.exports = {
   findUser,
   login,
   generateToken,
+  calculateAverage,
+  getFirstCharacter,
+  buildMessage,
+  processItems,
+  getStatus,
+  calculateSum,
+  validateAge,
+  calculateTotalA,
+  calculateTotalB,
+  getUserProperty,
+  recursiveProcess,
+  createUser,
+  validateInput,
+  removeFirst,
+  calculateValues,
+  fetchData,
+  isValid,
+  calculatePercentage,
+  getEnvironment,
+  getDebugInfo,
 };
