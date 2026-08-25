@@ -318,6 +318,46 @@ def get_user_role(role="admin"):
     return role
 
 
+# BUG: unused function argument
+def greet(name, formal):
+    return f"Hello, {name}!"
+
+
+# BUG: comparing a value to itself
+def is_consistent(value):
+    return value == value
+
+
+# BUG: pointless bare return at the end of a function
+def log_event(event):
+    print(f"event: {event}")
+    return
+
+
+# CODE SMELL: too many return statements
+def grade_score(score):
+    if score >= 90:
+        return "A"
+    if score >= 80:
+        return "B"
+    if score >= 70:
+        return "C"
+    if score >= 60:
+        return "D"
+    if score >= 50:
+        return "E"
+    if score >= 0:
+        return "F"
+    return "invalid"
+
+
+# CODE SMELL: chained equality checks instead of `in`
+def is_weekend(day):
+    if day == "Saturday" or day == "Sunday":
+        return True
+    return False
+
+
 # Fixed: temp_value is actually used now.
 def unused_example():
     temp_value = 123

@@ -462,6 +462,50 @@ function getEnvironment() {
 }
 
 
+// BUG: empty catch block silently swallows the error
+function tryParseJson(text) {
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+  }
+}
+
+
+// BUG: duplicate parameter name
+function addTwice(a, a) {
+  return a + a;
+}
+
+
+// BUG: self-assignment does nothing
+function normalizeName(name) {
+  name = name;
+  return name.trim().toLowerCase();
+}
+
+
+// BUG: lexical declaration in a case block without braces
+function describeCode(code) {
+  switch (code) {
+    case 1:
+      let message = "one";
+      return message;
+    default:
+      return "unknown";
+  }
+}
+
+
+// BUG: redeclared function in the same scope
+function computeTotal(items) {
+  return items.reduce((sum, item) => sum + item, 0);
+}
+
+function computeTotal(items) {
+  return items.length;
+}
+
+
 // SECURITY: sensitive data returned to caller
 function getDebugInfo(user) {
   return {
@@ -513,4 +557,9 @@ export {
   calculatePercentage,
   getEnvironment,
   getDebugInfo,
+  tryParseJson,
+  addTwice,
+  normalizeName,
+  describeCode,
+  computeTotal,
 };
