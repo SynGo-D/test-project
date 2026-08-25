@@ -1,4 +1,3 @@
-javascript
 const fs = require("fs");
 const crypto = require("crypto");
 const childProcess = require("child_process");
@@ -31,7 +30,7 @@ function unusedHelper(value) {
 }
 
 
-// BUG: missing break / fall-through
+// Fixed: falls through to default on purpose now, with an explicit break.
 function classify(str) {
   switch (str.length) {
     case 0:
@@ -39,17 +38,19 @@ function classify(str) {
 
     case 1:
       console.log("single character");
+      break;
 
     default:
       return "text";
   }
+
+  return "text";
 }
 
 
-// BUG: duplicate object key
+// Fixed: no more duplicate key.
 function getConfig() {
   return {
-    name: "default",
     name: "duplicate",
     debug: true,
     timeout: 5000,
@@ -57,9 +58,9 @@ function getConfig() {
 }
 
 
-// BUG: assignment instead of comparison
+// Fixed: comparison, not assignment.
 function isReady(status) {
-  if (status = "ready") {
+  if (status === "ready") {
     return true;
   }
 
@@ -67,15 +68,13 @@ function isReady(status) {
 }
 
 
-// BUG: unreachable code
+// Fixed: unreachable statement removed.
 function padLeft(str, length) {
   if (str.length >= length) {
     return str;
   }
 
   return " ".repeat(length - str.length) + str;
-
-  console.log("padded");
 }
 
 
@@ -335,9 +334,9 @@ function calculateTotalB(items) {
 }
 
 
-// BUG: wrong comparison
+// Fixed: comparison, not assignment.
 function isAdmin(role) {
-  if (role = "admin") {
+  if (role === "admin") {
     return true;
   }
 

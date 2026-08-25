@@ -5,11 +5,11 @@ import pickle
 import hashlib
 
 
-# BUG: undefined variable
+# Fixed: use the actual count of numbers, not an undefined name.
 def average(numbers):
     if not numbers:
         return 0
-    return sum(numbers) / total_count
+    return sum(numbers) / len(numbers)
 
 
 # HIGH COMPLEXITY / DEEPLY NESTED CONDITIONS
@@ -69,23 +69,25 @@ def classify_and_process(items, mode, threshold, verbose):
     return results
 
 
-# BUG: mutable default argument
-def add_items(items, cache=[]):
+# Fixed: no more mutable default argument.
+def add_items(items, cache=None):
+    if cache is None:
+        cache = []
     cache.append(items)
     return cache
 
 
-# SECURITY ISSUE: overly broad exception
+# Fixed: catches the specific exception, not everything.
 def safe_divide(a, b):
     try:
         return a / b
-    except:
+    except ZeroDivisionError:
         return None
 
 
-# STYLE / CORRECTNESS ISSUE
+# Fixed: identity comparison against None.
 def is_missing(value):
-    if value == None:
+    if value is None:
         return True
     return False
 
