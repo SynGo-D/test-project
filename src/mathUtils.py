@@ -323,15 +323,14 @@ def greet(name, formal):
     return f"Hello, {name}!"
 
 
-# BUG: comparing a value to itself
+# Fixed: no longer a tautological comparison.
 def is_consistent(value):
-    return value == value
+    return value is not None
 
 
-# BUG: pointless bare return at the end of a function
+# Fixed: no pointless bare return.
 def log_event(event):
     print(f"event: {event}")
-    return
 
 
 # CODE SMELL: too many return statements

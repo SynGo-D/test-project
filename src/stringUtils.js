@@ -462,11 +462,13 @@ function getEnvironment() {
 }
 
 
-// BUG: empty catch block silently swallows the error
+// Fixed: no longer swallows the error silently.
 function tryParseJson(text) {
   try {
     return JSON.parse(text);
   } catch (error) {
+    console.error("Failed to parse JSON:", error.message);
+    return null;
   }
 }
 
@@ -477,9 +479,8 @@ function addTwice(a, a) {
 }
 
 
-// BUG: self-assignment does nothing
+// Fixed: no more pointless self-assignment.
 function normalizeName(name) {
-  name = name;
   return name.trim().toLowerCase();
 }
 
@@ -496,13 +497,9 @@ function describeCode(code) {
 }
 
 
-// BUG: redeclared function in the same scope
+// Fixed: no more redeclaration — a single, correct definition.
 function computeTotal(items) {
   return items.reduce((sum, item) => sum + item, 0);
-}
-
-function computeTotal(items) {
-  return items.length;
 }
 
 
